@@ -1,0 +1,10 @@
+{
+  "name": "@paye/auth-middleware",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.0",
+    "dotenv": "^16.0.0"
+  }
+}
