@@ -20,7 +20,7 @@ app.use(
 // Protected routes: User, Expense, Notification
 app.use(
     "/user",
-    verifyJWT,
+    verifyToken,
     createProxyMiddleware({
         target: process.env.USER_SERVICE,
         changeOrigin: true,
@@ -30,7 +30,7 @@ app.use(
 
 app.use(
     "/expense",
-    verifyJWT,
+    verifyToken,
     createProxyMiddleware({
         target: process.env.EXPENSE_SERVICE,
         changeOrigin: true,
@@ -40,7 +40,7 @@ app.use(
 
 app.use(
     "/notification",
-    verifyJWT,
+    verifyToken,
     createProxyMiddleware({
         target: process.env.NOTIFICATION_SERVICE,
         changeOrigin: true,

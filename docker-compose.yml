@@ -1,40 +1,38 @@
-version: '3.8'
+version: "3.9"
 
 services:
-  postgres:
-    image: postgres:17
-    container_name: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: dev
-      POSTGRES_PASSWORD: devpass
-      POSTGRES_DB: myapp
+  gateway:
+    build: ./gateway
     ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.4.1
-    container_name: zookeeper
+      - "8080:8080"
     environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - "2181:2181"
-
-  kafka:
-    image: confluentinc/cp-kafka:7.4.1
-    container_name: kafka
+      - JWT_SECRET=supersecret
+      - AUTH_SERVICE=http://auth-service:3001
+      - USER_SERVICE=http://user-service:3002
+      - EXPENSE_SERVICE=http://expense-service:3003
+      - NOTIFICATION_SERVICE=http://notification-service:3004
     depends_on:
-      - zookeeper
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    ports:
-      - "9092:9092"
+      - auth-service
+      - user-service
+      - expense-service
+      - notification-service
 
-volumes:
-  pgdata:
+  auth-service:
+    build: ./services/auth-service
+    ports:
+      - "3001:3001"
+
+  user-service:
+    build: ./services/user-service
+    ports:
+      - "3002:3002"
+
+  expense-service:
+    build: ./services/expense-service
+    ports:
+      - "3003:3003"
+
+  notification-service:
+    build: ./services/notification-service
+    ports:
+      - "3004:3004"

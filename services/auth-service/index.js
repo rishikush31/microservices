@@ -1,6 +1,10 @@
 const session = require('express-session');
 const passport = require('./oauth');
 
+const express = require('express');
+require('dotenv').config();
+const app = express();
+
 app.use(session({ secret: 'keyboardcat', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());

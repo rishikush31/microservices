@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const app = express();
-const expenseRoutes = require('./routes/expenseRoutes');
+const expenseRoutes = require('./routes/expenseRoute');
 
 app.use(express.json());
 app.use('/expenses', expenseRoutes);
