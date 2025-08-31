@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const expenseController = require('../controllers/expenseController');
-const authMiddleware = require('@paye/auth-middleware');
 
-router.post('/', authMiddleware, expenseController.createExpense);
-router.get('/', authMiddleware, expenseController.getMyExpenses);
+router.post('/', expenseController.createExpense);
+router.get('/', expenseController.getMyExpenses);
 
 module.exports = router;
